@@ -6,6 +6,7 @@ OperationFailure = pymongo.errors.OperationFailure
 _connection = Connection(getattr(settings, 'MANGO_DB_URI', 'localhost'))
 database = _connection[getattr(settings, 'MANGO_SESSION_DB', 'django')]
 collection = getattr(settings, 'MANGO_SESSION_COLL', 'session2')
+safe_update = getattr(settings, 'MANGO_SAFE_UPDATE', True)
 
 class Model(object):
 

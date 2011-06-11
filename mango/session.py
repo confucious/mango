@@ -1,7 +1,7 @@
 import datetime
 from django.contrib.sessions.backends.base import SessionBase, CreateError
 from django.utils.encoding import force_unicode
-from mango import database as db, OperationFailure, collection
+from mango import database as db, OperationFailure, collection, safe_update
 import os
 import uuid
 
@@ -53,7 +53,7 @@ class SessionStore(SessionBase):
                 db[collection].save(obj, safe=True)
                 assert self.exists(self.session_key)
             else:
-                db[collection].update({'session_key': self.session_key}, obj, upsert=True, safe=True)
+                db[collection].update({'session_key': self.session_key}, obj, upsert=True, safe=safe_update)
         except OperationFailure, e:
             if must_create:
                 raise CreateError
