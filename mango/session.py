@@ -53,7 +53,7 @@ class SessionStore(SessionBase):
                 db[collection].save(obj, safe=True)
                 assert self.exists(self.session_key)
             else:
-                db[collection].update({'session_key': self.session_key}, obj, upsert=True)
+                db[collection].update({'session_key': self.session_key}, obj, upsert=True, safe=True)
         except OperationFailure, e:
             if must_create:
                 raise CreateError
